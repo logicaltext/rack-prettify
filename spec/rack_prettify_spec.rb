@@ -116,6 +116,18 @@ describe Rack::Prettify do
          end
        end
 
+       it "should not update the content length if it was not set" do
+         @resources.each do |resource|
+           app = Rack::Builder.new do
+             use Rack::Lint
+             use Rack::Prettify
+             run resource.rack_app
+           end
+           status, headers, response = app.call(@env)
+           headers['Content-Length'].should == nil
+         end
+       end
+
        context "private methods" do
          context "#set_prettified_as_xhtml_or_html" do
            [:xhtml, :html].each do |kind|
