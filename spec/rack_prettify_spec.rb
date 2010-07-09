@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Rack::Prettify do
- 
+
    before(:each) do
      @env       = Rack::MockRequest.env_for '/'
      @resources = [xhtml_page, html5_page]
    end
- 
+
    it "should have a default output_type of :xhtml" do
      @resources.each do |resource|
        Rack::Prettify.new(resource.rack_app).output_type.should == :xhtml
@@ -116,7 +116,6 @@ describe Rack::Prettify do
          end
        end
 
-
        context "private methods" do
          context "#set_prettified_as_xhtml_or_html" do
            [:xhtml, :html].each do |kind|
@@ -137,7 +136,7 @@ describe Rack::Prettify do
        end
 
      end
-  
+
    end
- 
+
 end
