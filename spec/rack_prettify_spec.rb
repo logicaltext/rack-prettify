@@ -20,7 +20,6 @@ describe Rack::Prettify do
          should raise_error
      end
    end
-  
    context "when receiving a request for a non-html resource" do
      it "should fall through to the app" do
        response = rack_app_response(javascript_resource, @env)
@@ -81,6 +80,17 @@ describe Rack::Prettify do
            rack_app_response(resource, @env).should_not match(/^$\n/)
          end
        end
+
+      it "should disable output escaping for embedded JavaScript" do
+        resource = embedded_javascript_page
+        opts = { :output_type => :html }
+        rack_app_response(resource, @env, opts).
+          should == resource.expected_html
+
+        opts = { :output_type => :xhtml }
+        rack_app_response(resource, @env, opts).
+          should == resource.expected_xhtml
+      end
 
        it "should return expected, prettified output" do
          @resources.each do |resource|

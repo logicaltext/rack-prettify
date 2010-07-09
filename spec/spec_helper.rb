@@ -85,6 +85,28 @@ def javascript_resource
   RackResource.new(opts)
 end
 
+def embedded_javascript_page
+  original       =
+    fixture('embedded_javascript.html')
+
+  # Ideally, this should be "embedded_javascript_prettified_as_html.html".
+  expected_html  =
+    fixture('non_indented_embedded_javascript_prettified_as_html.html')
+
+  # Ideally, this should be "embedded_javascript_prettified_as_xhtml.html".
+  expected_xhtml =
+    fixture('non_indented_embedded_javascript_prettified_as_xhtml.html')
+
+  opts = {
+    :original_content => original,
+    :content_type     => 'text/html',
+    :expected_html    => expected_html,
+    :expected_xhtml   => expected_xhtml
+  }
+
+  RackResource.new(opts)
+end
+
 def rack_app_response(resource, env, opts={})
   app = Rack::Builder.new do
     use Rack::Lint

@@ -81,7 +81,7 @@ Not what we want. Instead, Rack::Prettify will give you this:
 Known Issues
 ------------
 
-Angle brackets within embedded JavaScript are escaped, thus breaking the JavaScript. For example, you might insert JavaScript in the body of your HTML (e.g., using the [Hivelogic Enkoder][5] to obfuscate an email address), which uses `/* <![CDATA[ */ ... /* ]]> */` to protect validators from balking. Rack::Prettify currently escapes the angle brackets which breaks the JavaScript. The suggested workaround is not to use CDATA declarations in embedded JavaScript. This is a bug. Patches are welcome.
+Sometimes you might want to embed JavaScript in your HTML (e.g., using the [Hivelogic Enkoder][5] to obfuscate an email address), which uses `/* <![CDATA[ */ ... /* ]]> */` to protect validators from balking. Rack::Prettify does not escape the contents of embedded `<script>` tags, but it can't currently indent the contents properly. It may well be possible to fix this using XSLT 1.0; patches are more than welcome!
 
 
 [1]: http://nokogiri.org

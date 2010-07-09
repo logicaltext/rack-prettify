@@ -31,6 +31,16 @@
 
   <xsl:template match="text()[normalize-space(.)='']"/>
 
+  <xsl:template match="script">
+    <xsl:param name="indent" select="''"/>
+    <xsl:call-template name="newline"/>
+    <xsl:value-of select="$indent"/>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:value-of select="." disable-output-escaping="yes" />
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="*">
     <xsl:param name="indent" select="''"/>
     <!-- if the preceding node is a text node and doesn't end in whitespace,
