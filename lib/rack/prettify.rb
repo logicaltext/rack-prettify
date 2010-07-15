@@ -22,11 +22,7 @@ module Rack
       return [@status, @headers, @response] unless content_is_html?
 
       parse and prettify
-
-      if @headers['Content-Length']
-        @headers['Content-Length'] = @prettified.length.to_s
-      end
-      
+      update_content_length_header_if_present
       [@status, @headers, [@prettified]]
     end
 
@@ -99,5 +95,10 @@ module Rack
       @prettified = [@original_dtd, "\n", @prettified].compact.join
     end
 
+    def update_content_length_header_if_present
+      if @headers['Content-Length']
+        @headers['Content-Length'] = @prettified.length.to_s
+      end
+    end
   end
 end
